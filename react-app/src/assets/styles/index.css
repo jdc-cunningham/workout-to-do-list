@@ -1,0 +1,12 @@
+body {
+  padding: 10px;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+}

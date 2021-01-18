@@ -1,0 +1,58 @@
+.App__day-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-top: 10px;
+  width: 100%;
+}
+
+h3 {
+  flex: 0;
+  padding-right: 5px;
+  font-size: 18px;
+  text-transform: capitalize;
+  min-width: 50px;
+}
+
+.completion-block {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  flex: 1;
+}
+
+.completion-text {
+  width: 100%;
+  text-align: left;
+}
+
+.percentage {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  width: 100%;
+}
+
+.percentage-bar {
+  flex: 1;
+  padding-right: 5px;
+}
+
+.percentage-bar__internal {
+  height: 4px;
+
+  &.orange {
+    background-color: orange;
+  }
+
+  &.green {
+    background-color: green;
+  }
+}
+
+.percentage-text {
+  flex: 0;
+}

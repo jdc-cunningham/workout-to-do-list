@@ -1,4 +1,5 @@
 import './assets/styles/App.scss';
+import DayRow from './components/day-row/DayRow';
 
 const App = () => {
   const sampleData = [ // sort on MySQL side
@@ -21,28 +22,9 @@ const App = () => {
     }
   ];
 
-  const dayWorkoutsComplete = (workouts) => {
-    // ehh this isn't clean
-    let total = 0;  
-    let complete = 0;
-    Object.keys(workouts).forEach(workout => (
-      workouts[workout].forEach(set => {
-        total += 1;
-        if (set) {
-          complete += 1;
-        }
-      })
-    ));
-
-    return {
-      complete: (complete / total === 1),
-      percentage: (complete / total * 100)
-    }
-  }
-
   const renderWeeks = (weeks) => {
-    if (!weeks) {
-      return `<p>No data</p>`;
+    if (!weeks || !weeks.length) {
+      return <p>No data</p>;
     }
 
     return weeks.map((week, index) => (
@@ -50,17 +32,7 @@ const App = () => {
         <h2>Week {week.dateRange} {week.month}</h2>
         {
           Object.keys(week.days).map((dayKey, index) => (
-            <div key={index}>
-              <h3>{dayKey}</h3>
-              <div>
-                <div>
-                  
-                </div>
-                <div>
-                  {dayWorkoutsComplete(week.days[dayKey]).complete ? 'complete' : 'incomplete'}
-                </div>
-              </div>
-            </div>
+            <DayRow key={index} day={dayKey} dayData={week.days[dayKey]}/>
           ))
         }
       </div>

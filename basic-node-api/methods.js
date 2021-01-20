@@ -22,7 +22,7 @@ const insertEntry = async (req, res) => {
   const workoutDataId = await insertWorkout(workoutData);
 
   if (!workoutDataId) {
-    res.status(500).send('fail1');
+    res.status(400).send('fail1');
   }
 
   pool.query(
@@ -31,7 +31,7 @@ const insertEntry = async (req, res) => {
     (err, res2) => {
       if (err) {
         console.log('insertEntry', err);
-        res.status(500).send('fail2');
+        res.status(400).send('fail2');
         return;
       } else {
         res.status(204).send('success');

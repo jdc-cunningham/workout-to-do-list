@@ -25,7 +25,7 @@ app.use(
 
 // routes
 app.get('/',(req, res) => {
-  res.status(200).send('tt');
+  res.status(200).send('working');
 });
 
 app.post('/insert-entry', insertEntry);

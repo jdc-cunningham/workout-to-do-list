@@ -1,4 +1,4 @@
-import React, { useState, createRef, useRef } from 'react';
+import React, { useState, createRef, useRef, useEffect } from 'react';
 import './assets/styles/App.scss';
 import DayRow from './components/day-row/DayRow';
 
@@ -51,20 +51,28 @@ const App = () => {
               key={day.entryId}
               day={day.day}
               dayData={day["workouts"]}
-              onClick={() => { setActiveDay(week.days.entryId) }}/>
+              clickHandler={setActiveDay}
+              activeDay={day.entryId}
+              />
           ))
         }
       </div>
     ));
   }
 
-  const activeDayModal = (workoutData) => {
-    if (!workoutData) {
+  const activeDayModal = (activeDay) => {
+    console.log('wd', activeDay);
+
+    if (!activeDay) {
       return null;
     }
 
-
+    console.log('run');
   }
+
+  useEffect(() => {
+    console.log('ue', activeDay);
+  }, [activeDay]);
 
   return (
     <div className="App">

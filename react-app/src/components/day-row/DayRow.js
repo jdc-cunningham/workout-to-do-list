@@ -1,7 +1,9 @@
 import './DayRow.scss';
 
 const DayRow = (props) => {
-  const { day, dayData, clickHandler, activeDay } = props;
+  console.log(props);
+  const { dayData, clickHandler } = props;
+  const { day, workouts } = dayData;
   const dayWorkoutsComplete = (workouts) => {
     // ehh this isn't clean
     let total = 0;  
@@ -21,11 +23,11 @@ const DayRow = (props) => {
     }
   }
 
-  const workoutProgress = dayWorkoutsComplete(dayData);
+  const workoutProgress = dayWorkoutsComplete(workouts);
   const workoutProgressPercentage = workoutProgress.percentage;
 
   return (
-    <div className="App__day-row" onClick={() => clickHandler(activeDay)}>
+    <div className="App__day-row" onClick={() => clickHandler(dayData)}>
       <h3>{day.substring(0, 3)}</h3>
       <div className="completion-block">
         <div className="percentage">

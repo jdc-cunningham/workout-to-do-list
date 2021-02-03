@@ -1,9 +1,10 @@
 import React, { useState, createRef, useRef, useEffect } from 'react';
 import './assets/styles/App.scss';
 import DayRow from './components/day-row/DayRow';
+import DayChecklist from './components/day-checklist/DayChecklist';
 
 const App = () => {
-  const [activeDay, setActiveDay] = useState(null);
+  const [activeDayData, setActiveDayData] = useState(null);
 
   const generateDateInfo = () => {
     
@@ -18,15 +19,17 @@ const App = () => {
         {
           "entryId": 2,
           "day": "Tuesday",
+          "date": "2021-02-02",
           "workouts": {
-            "squats": [true, true, true],
-            "push ups": [true, true, true],
-            "sit ups": [true, true, true]
+            "squats": [true, false, false],
+            "push ups": [true, false, false],
+            "sit ups": [true, false, false]
           }
         },
         {
           "entryId": 1,
           "day": "Monday",
+          "date": "2021-02-01",
           "workouts": {
             "squats": [true, false, false],
             "push ups": [true, false, false],
@@ -49,35 +52,31 @@ const App = () => {
           week.days.map((day, index) => (
             <DayRow
               key={day.entryId}
-              day={day.day}
-              dayData={day["workouts"]}
-              clickHandler={setActiveDay}
-              activeDay={day.entryId}
-              />
+              dayData={day}
+              clickHandler={setActiveDayData}
+            />
           ))
         }
       </div>
     ));
   }
 
-  const activeDayModal = (activeDay) => {
-    console.log('wd', activeDay);
-
-    if (!activeDay) {
+  const activeDayModal = (dayData) => {
+    if (!dayData) {
       return null;
     }
 
-    console.log('run');
+    return <DayChecklist workoutData={dayData} setActiveDayData={setActiveDayData} />;
   }
 
   useEffect(() => {
-    console.log('ue', activeDay);
-  }, [activeDay]);
+    console.log('ue', activeDayData);
+  }, [activeDayData]);
 
   return (
     <div className="App">
       {renderWeeks(sampleData)}
-      {activeDayModal(activeDay)}
+      {activeDayModal(activeDayData)}
     </div>
   );
 }

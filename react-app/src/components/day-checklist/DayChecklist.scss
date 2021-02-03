@@ -20,12 +20,28 @@
     background-color: crimson;
     color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
     border-radius: 15px;
     z-index: 2;
 
       span {
         margin-top: -3px; // slide x up
       }
+  }
+}
+
+.day-checklist__group {
+  margin-top: 20px;
+}
+
+.group__checklist {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 5px;
+  padding-left: 10px;
+
+  input {
+    margin-left: 5px;
   }
 }

@@ -1,7 +1,6 @@
 import './DayRow.scss';
 
 const DayRow = (props) => {
-  console.log(props);
   const { dayData, clickHandler } = props;
   const { day, workouts } = dayData;
   const dayWorkoutsComplete = (workouts) => {

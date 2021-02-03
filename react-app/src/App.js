@@ -1,4 +1,4 @@
-import React, { useState, createRef, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './assets/styles/App.scss';
 import DayRow from './components/day-row/DayRow';
 import DayChecklist from './components/day-checklist/DayChecklist';
@@ -68,10 +68,6 @@ const App = () => {
 
     return <DayChecklist workoutData={dayData} setActiveDayData={setActiveDayData} />;
   }
-
-  useEffect(() => {
-    console.log('ue', activeDayData);
-  }, [activeDayData]);
 
   return (
     <div className="App">

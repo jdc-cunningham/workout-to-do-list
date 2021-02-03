@@ -64,6 +64,9 @@ const DayChecklist = (props) => {
           </div>
         ))
       }
+      <div className="day-checklist__save">
+        <button type="button">Save</button>
+      </div>
     </div>
   )
 }

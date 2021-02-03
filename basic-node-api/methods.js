@@ -16,49 +16,66 @@ const formatDate = () => {
   return [year, month, day].join('-');
 }
 
-const insertWorkout = async (workoutData) => {
-  return new Promise(resolve => {
-    pool.query(
-      `INSERT INTO workout_data SET workout = ?`,
-      [JSON.stringify(workoutData)],
-      (err, res) => {
-        if (err) {
-          console.log('insertWorkout', err);
-          resolve(false);
-        } else {
-          resolve(res.insertId);
-        }
-      }
-    );
-  });
-}
-
 const insertEntry = async (req, res) => {
-  const { week, month, day, year, workoutData } = req.body;
-  const workoutDataId = await insertWorkout(workoutData);
+  const { date, workoutData } = req.body;
+  // ehh I could put validation here if row exists etc...
+  // but I'll just catch it on the front end
 
-  if (!workoutDataId) {
-    res.status(400).send('fail1');
+  if (!workoutData) {
+    res.status(400).send('invalid data');
   }
 
-  const date = formatDate();
-
   pool.query(
-    `INSERT INTO entries SET week = ?, month = ?, day = ?, year = ?, date = ?, workout_data_id = ?`,
-    [week, month, day, year, date, workoutDataId],
-    (err, res2) => {
+    `INSERT INTO entries SET date = ?, workout_data = ?`,
+    [date, JSON.stringify(workoutData)],
+    (err, sqlRes) => {
       if (err) {
-        console.log('insertEntry', err);
-        res.status(400).send('fail2');
-        return;
+        console.log('insertEntry', err); // if you were capturing server side logs
+        res.status(400).send('failed to insert');
       } else {
         res.status(204).send('success');
-        return;
+      }
+    }
+  );
+}
+
+const updateEntry = (req, res) => {
+  const { entryId, date, workoutData } = req.body;
+  
+  if (!entryId) {
+    res.status(400).send('invalid data');
+  }
+
+  pool.query(
+    `UPDATE entries SET date = ?, workout_data = ? WHERE id = ?`,
+    [date, JSON.stringify(workoutData), entryId],
+    (err, sqlRes) => {
+      if (err) {
+        console.log('updateEntry', err);
+        res.status(400).send('failed to update');
+      } else {
+        res.status(200).send('success');
+      }
+    }
+  );
+}
+
+const getEntries = (req, res) => {
+  pool.query(
+    `SELECT * FROM entries ORDER BY id DESC LIMIT 30`,
+    (err, sqlRes) => {
+      if (err) {
+        console.log('getEntries', err);
+        res.status(400).send('failed to retrieve entries');
+      } else {
+        res.status(200).send(sqlRes);
       }
     }
   );
 }
 
 module.exports = {
-  insertEntry
+  insertEntry,
+  updateEntry,
+  getEntries
 }

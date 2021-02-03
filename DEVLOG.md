@@ -2,9 +2,14 @@ Tasks
 - [x] finish percent/incomplete component
 - [x] create database tables
 - [x] create API
-- [ ] make check mark interface
+- [x] make check mark interface
 - [ ] update data pull/send
 - [ ] host and test
+
+### 02/03/2021
+I had some plans with week number grouping and what not... but I guess JS does not have an "expectedly works/clean" way to obtain that like JavaScript. Anyway I'm mostly just reducing complexity. Can pull this data out from a date time. Unfortunately messes up the front end/will have to adjust it. Working on linking the UI with the API right now.
+
+Well I completely blew up the front end, was expecting data to be grouped in another way, staring at red walls right now. Will have to fix next time I work on this.
 
 ### 02/02/2021
 It is so brutal to make this, I don't know why.

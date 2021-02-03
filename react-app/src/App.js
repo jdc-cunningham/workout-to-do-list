@@ -2,42 +2,27 @@ import React, { useState, useEffect } from 'react';
 import './assets/styles/App.scss';
 import DayRow from './components/day-row/DayRow';
 import DayChecklist from './components/day-checklist/DayChecklist';
+import axios from 'axios';
 
 const App = () => {
   const [activeDayData, setActiveDayData] = useState(null);
+  const [currentData, setCurrentData] = useState([]);
 
-  const sampleData = [ // sort on MySQL side
+  const sampleData = [
     {
-      week: 3,
-      month: "Jan",
-      dateRange: "17 - 23",
-      days: [
-        {
-          "entryId": 2,
-          "day": "Tuesday",
-          "date": "2021-02-02",
-          "workouts": {
-            "squats": [true, false, false],
-            "push ups": [true, false, false],
-            "sit ups": [true, false, false]
-          }
-        },
-        {
-          "entryId": 1,
-          "day": "Monday",
-          "date": "2021-02-01",
-          "workouts": {
-            "squats": [true, false, false],
-            "push ups": [true, false, false],
-            "sit ups": [true, false, false]
-          }
-        }
-      ]
+      "id": 1,
+      "date": "2020-02-03T06:00:00.000Z",
+      "workouts_data": {
+        "squats": [true, false, false],
+        "push ups": [true, false, false],
+        "sit ups": [true, false, false]
+      }
     }
   ];
 
   const formatDate = (request) => {
-    var d = new Date(),
+    // this doesn't work the yyyy-mm-dd to date
+    var d = request?.date ? new Date(request.date) : new Date(),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
         year = d.getFullYear();
@@ -47,7 +32,7 @@ const App = () => {
     if (day.length < 2) 
         day = '0' + day;
 
-    const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
     if (request && request.type === "day") {
       return days[d.getDay()];
@@ -66,23 +51,23 @@ const App = () => {
     }
   };
 
-  const renderWeeks = (weeks) => {
-    if (!weeks || !weeks.length) {
+  const renderWeeks = (workouts) => {
+    if (!workouts || !workouts.length) {
       return <p>No data</p>;
     }
 
-    return weeks.map((week, index) => (
+
+
+    return workouts.map((workout, index) => (
       <div key={index} className="App__week-group">
-        <h2>Week {week.dateRange} {week.month}</h2>
+        {/* <h2>Week {week.dateRange} {week.month}</h2> */}
         <button type="button" onClick={ () => { setActiveDayData(blankEntry) } }>Add entry</button>
         {
-          week.days.map((day, index) => (
-            <DayRow
-              key={day.entryId}
-              dayData={day}
-              clickHandler={setActiveDayData}
-            />
-          ))
+          <DayRow
+            key={workout.id}
+            dayData={workout.date} // this is wrong, yyyy-mm-dd to date object not working though
+            clickHandler={setActiveDayData}
+          />
         }
       </div>
     ));
@@ -95,6 +80,22 @@ const App = () => {
 
     return <DayChecklist workoutData={dayData} setActiveDayData={setActiveDayData} />;
   }
+
+  // get data on load
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API_BASE}/get-entries`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setCurrentData(res.status.data);
+        } else {
+          alert('Failed to get data');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   return (
     <div className="App">

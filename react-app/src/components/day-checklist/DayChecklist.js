@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import './DayChecklist.scss';
 
 const DayChecklist = (props) => {
@@ -36,9 +37,9 @@ const DayChecklist = (props) => {
     setWorkouts([...workouts], curState);
   }
 
-  useEffect(() => {
-
-  }, [workouts]);
+  const saveData = () => {
+    
+  }
 
   let inc = 0; // this is dumb
 
@@ -65,7 +66,7 @@ const DayChecklist = (props) => {
         ))
       }
       <div className="day-checklist__save">
-        <button type="button">Save</button>
+        <button type="button" onClick={ () => saveData() }>Save</button>
       </div>
     </div>
   )

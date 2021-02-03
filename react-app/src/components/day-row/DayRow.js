@@ -3,6 +3,9 @@ import './DayRow.scss';
 const DayRow = (props) => {
   const { dayData, clickHandler } = props;
   const { day, workouts } = dayData;
+
+  console.log(dayData);
+
   const dayWorkoutsComplete = (workouts) => {
     // ehh this isn't clean
     let total = 0;  
@@ -27,7 +30,7 @@ const DayRow = (props) => {
 
   return (
     <div className="App__day-row" onClick={() => clickHandler(dayData)}>
-      <h3>{day.substring(0, 3)}</h3>
+      <h3>{day.substring(0, 10)}</h3>
       <div className="completion-block">
         <div className="percentage">
           <div className="percentage-bar">

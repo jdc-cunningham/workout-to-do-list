@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = 5000;
 
-const { insertEntry } = require('./methods');
+const { insertEntry, updateEntry, getEntries } = require('./methods');
 
 // CORs
 app.use((req, res, next) => {
@@ -28,7 +28,9 @@ app.get('/',(req, res) => {
   res.status(200).send('working');
 });
 
+app.get('/get-entries', getEntries);
 app.post('/insert-entry', insertEntry);
+app.post('/update-entry', updateEntry);
 
 app.listen(port, () => {
   console.log(`App running... on port ${port}`);

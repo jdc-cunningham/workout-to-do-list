@@ -41,8 +41,8 @@ const App = () => {
     return [year, month, day].join('-');
   }
 
+  // used to populate new form fields
   const blankEntry = {
-    "day": formatDate({ type: "day" }),
     "date": formatDate(),
     "workouts": {
       "squats": [false, false, false],
@@ -56,8 +56,6 @@ const App = () => {
       return <p>No data</p>;
     }
 
-
-
     return workouts.map((workout, index) => (
       <div key={index} className="App__week-group">
         {/* <h2>Week {week.dateRange} {week.month}</h2> */}
@@ -65,7 +63,7 @@ const App = () => {
         {
           <DayRow
             key={workout.id}
-            dayData={workout.date} // this is wrong, yyyy-mm-dd to date object not working though
+            dayData={workout} // this is wrong, yyyy-mm-dd to date object not working though
             clickHandler={setActiveDayData}
           />
         }

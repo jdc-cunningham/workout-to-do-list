@@ -2,9 +2,7 @@ import './DayRow.scss';
 
 const DayRow = (props) => {
   const { dayData, clickHandler } = props;
-  const { day, workouts } = dayData;
-
-  console.log(dayData);
+  const { date, workouts_data } = dayData;
 
   const dayWorkoutsComplete = (workouts) => {
     // ehh this isn't clean
@@ -25,28 +23,36 @@ const DayRow = (props) => {
     }
   }
 
-  const workoutProgress = dayWorkoutsComplete(workouts);
+  const workoutProgress = dayWorkoutsComplete(workouts_data);
   const workoutProgressPercentage = workoutProgress.percentage;
+
+  // redundant code
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const dateObj = new Date(date);
+  const dayNum = dateObj.getDay();
 
   return (
     <div className="App__day-row" onClick={() => clickHandler(dayData)}>
-      <h3>{day.substring(0, 10)}</h3>
-      <div className="completion-block">
-        <div className="percentage">
-          <div className="percentage-bar">
-            <div
-              className={`percentage-bar__internal ${workoutProgressPercentage === 100 ? 'green' : 'orange'}`}
-              style={{width: `${workoutProgressPercentage.toFixed(0)}%`}}
-            />
+      <p class="full-width">{date.split('T')[0]}</p>
+      <span>
+        <h3>{days[dayNum].substring(0, 3)}</h3>
+        <div className="completion-block">
+          <div className="percentage">
+            <div className="percentage-bar">
+              <div
+                className={`percentage-bar__internal ${workoutProgressPercentage === 100 ? 'green' : 'orange'}`}
+                style={{width: `${workoutProgressPercentage.toFixed(0)}%`}}
+              />
+            </div>
+            <div className="percentage-text">
+              {workoutProgress.percentage.toFixed(0)}%
+            </div>
           </div>
-          <div className="percentage-text">
-            {workoutProgress.percentage.toFixed(0)}%
+          <div className="completion-text">
+            workout {workoutProgress.complete ? 'complete' : 'incomplete'}
           </div>
         </div>
-        <div className="completion-text">
-          workout {workoutProgress.complete ? 'complete' : 'incomplete'}
-        </div>
-      </div>
+      </span>
     </div>
   )
 }

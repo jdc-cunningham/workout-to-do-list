@@ -6,8 +6,15 @@ Tasks
 - [ ] update data pull/send
 - [ ] host and test
 
+### 02/05/2021
+Going to make this work as it's just for me/need to move onto other projects.
+Ehh this is tough... gotta get motivation I need to get these off my list.
+I really have to update my calorie counter app too where I can actually use it/make groups.
+
+This app is a mess, that's what you get from freestyle coding.
+
 ### 02/03/2021
-I had some plans with week number grouping and what not... but I guess JS does not have an "expectedly works/clean" way to obtain that like JavaScript. Anyway I'm mostly just reducing complexity. Can pull this data out from a date time. Unfortunately messes up the front end/will have to adjust it. Working on linking the UI with the API right now.
+I had some plans with week number grouping and what not... but I guess JS does not have an "expectedly works/clean" way to obtain that like PHP. Anyway I'm mostly just reducing complexity. Can pull this data out from a date time. Unfortunately messes up the front end/will have to adjust it. Working on linking the UI with the API right now.
 
 Well I completely blew up the front end, was expecting data to be grouped in another way, staring at red walls right now. Will have to fix next time I work on this.
 

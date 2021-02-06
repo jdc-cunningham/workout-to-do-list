@@ -16,7 +16,7 @@ const formatDate = () => {
   return [year, month, day].join('-');
 }
 
-const insertEntry = async (req, res) => {
+const insertEntry = (req, res) => {
   const { date, workoutData } = req.body;
   // ehh I could put validation here if row exists etc...
   // but I'll just catch it on the front end

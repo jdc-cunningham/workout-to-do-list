@@ -6,7 +6,11 @@ const DayChecklist = (props) => {
   const { workoutData, setActiveDayData } = props;
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const dateParts = workoutData.date.split("-");
-  const titleString = `${workoutData.day} ${months[parseInt(dateParts[1]) - 1]}, ${dateParts[2]} ${dateParts[0]}`;
+  // needs to be a global util
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const dateObj = new Date(workoutData.date);
+  const dayNum = dateObj.getDay();
+  const titleString = `${days[dayNum]} ${months[parseInt(dateParts[1]) - 1]}, ${dateParts[2]} ${dateParts[0]}`;
 
   const stateArr = [false]; // first value is offset, this is so ugly I just don't care
 
@@ -38,7 +42,7 @@ const DayChecklist = (props) => {
   }
 
   const saveData = () => {
-    
+
   }
 
   let inc = 0; // this is dumb

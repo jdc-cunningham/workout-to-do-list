@@ -2,9 +2,21 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  flex-direction: row;
+  flex-direction: column;
   margin-top: 10px;
   width: 100%;
+
+  p.full-width {
+    width: 100%;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    width: 100%;
+  }
 }
 
 h3 {

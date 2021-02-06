@@ -8,17 +8,18 @@ const App = () => {
   const [activeDayData, setActiveDayData] = useState(null);
   const [currentData, setCurrentData] = useState([]);
 
-  const sampleData = [
-    {
-      "id": 1,
-      "date": "2020-02-03T06:00:00.000Z",
-      "workouts_data": {
-        "squats": [true, false, false],
-        "push ups": [true, false, false],
-        "sit ups": [true, false, false]
-      }
-    }
-  ];
+  // mocks
+  // const sampleData = [
+  //   {
+  //     "id": 1,
+  //     "date": "2020-02-03T06:00:00.000Z",
+  //     "workout_data": {
+  //       "squats": [true, false, false],
+  //       "push ups": [true, false, false],
+  //       "sit ups": [true, false, false]
+  //     }
+  //   }
+  // ];
 
   const formatDate = (request) => {
     // this doesn't work the yyyy-mm-dd to date
@@ -32,7 +33,7 @@ const App = () => {
     if (day.length < 2) 
         day = '0' + day;
 
-    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
     if (request && request.type === "day") {
       return days[d.getDay()];
@@ -44,11 +45,11 @@ const App = () => {
   // used to populate new form fields
   const blankEntry = {
     "date": formatDate(),
-    "workouts": {
+    "workout_data": JSON.stringify({
       "squats": [false, false, false],
       "push ups": [false, false, false],
       "sit ups": [false, false, false]
-    }
+    })
   };
 
   const renderWeeks = (workouts) => {
@@ -59,11 +60,10 @@ const App = () => {
     return workouts.map((workout, index) => (
       <div key={index} className="App__week-group">
         {/* <h2>Week {week.dateRange} {week.month}</h2> */}
-        <button type="button" onClick={ () => { setActiveDayData(blankEntry) } }>Add entry</button>
         {
           <DayRow
             key={workout.id}
-            dayData={workout} // this is wrong, yyyy-mm-dd to date object not working though
+            dayData={workout}
             clickHandler={setActiveDayData}
           />
         }
@@ -83,9 +83,8 @@ const App = () => {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API_BASE}/get-entries`)
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
-          setCurrentData(res.status.data);
+          setCurrentData(res.data);
         } else {
           alert('Failed to get data');
         }
@@ -97,7 +96,11 @@ const App = () => {
 
   return (
     <div className="App">
-      {renderWeeks(sampleData)}
+      <span class="full-width-row">
+        <h2>Workouts</h2>
+        <button type="button" onClick={ () => { setActiveDayData(blankEntry) } }>Add entry</button>
+      </span>
+      {renderWeeks(currentData)}
       {activeDayModal(activeDayData)}
     </div>
   );

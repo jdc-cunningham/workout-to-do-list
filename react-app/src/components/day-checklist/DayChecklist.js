@@ -5,18 +5,18 @@ import './DayChecklist.scss';
 const DayChecklist = (props) => {
   const { workoutData, setActiveDayData } = props;
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const dateParts = workoutData.date.split("-");
+  const dateParts = workoutData.date.split("T")[0].split("-");
   // needs to be a global util
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const dateObj = new Date(workoutData.date);
   const dayNum = dateObj.getDay();
   const titleString = `${days[dayNum]} ${months[parseInt(dateParts[1]) - 1]}, ${dateParts[2]} ${dateParts[0]}`;
-
   const stateArr = [false]; // first value is offset, this is so ugly I just don't care
 
   // waste double loop
-  Object.keys(workoutData.workouts).map(workout => (
-    workoutData.workouts[workout].map(set => stateArr.push(set))
+  const workout_data = JSON.parse(workoutData.workout_data);
+  Object.keys(workout_data).map(workout => (
+    workout_data[workout].map(set => stateArr.push(set))
   ));
 
   // make ref store of all inputs
@@ -52,11 +52,11 @@ const DayChecklist = (props) => {
       <button type="button" className="close" onClick={() => { setActiveDayData(null) }}><span>x</span></button>
       <h2>{ titleString }</h2>
       {
-        Object.keys(workoutData.workouts).map((workout, index) => (
+        Object.keys(workout_data).map((workout, index) => (
           <div key={index} className="day-checklist__group">
             <h3>{ workout }</h3>
             {
-              workoutData.workouts[workout].map(set => {
+              workout_data[workout].map(set => {
                 inc += 1;
                 return (
                   <div key={makeId(16)} className="group__checklist">

@@ -2,7 +2,7 @@ import './DayRow.scss';
 
 const DayRow = (props) => {
   const { dayData, clickHandler } = props;
-  const { date, workouts_data } = dayData;
+  const { date, workout_data } = dayData;
 
   const dayWorkoutsComplete = (workouts) => {
     // ehh this isn't clean
@@ -23,17 +23,22 @@ const DayRow = (props) => {
     }
   }
 
-  const workoutProgress = dayWorkoutsComplete(workouts_data);
+  const workoutProgress = dayWorkoutsComplete(JSON.parse(workout_data));
   const workoutProgressPercentage = workoutProgress.percentage;
 
   // redundant code
-  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
   const dateObj = new Date(date);
   const dayNum = dateObj.getDay();
 
+  const toMdy = (ymdString) => {
+     const stringParts = ymdString.split('-');
+     return `${stringParts[1]}/${stringParts[2]}/${stringParts[0]}`;
+  }
+
   return (
     <div className="App__day-row" onClick={() => clickHandler(dayData)}>
-      <p class="full-width">{date.split('T')[0]}</p>
+      <p className="full-width bold">{toMdy(date.split('T')[0])}</p>
       <span>
         <h3>{days[dayNum].substring(0, 3)}</h3>
         <div className="completion-block">

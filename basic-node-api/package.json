@@ -30,6 +30,5 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "proxy": "http://192.168.1.144:5010"
+  "license": "ISC"
 }

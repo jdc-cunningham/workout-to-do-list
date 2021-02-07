@@ -44,6 +44,7 @@ const updateEntry = (req, res) => {
   
   if (!entryId) {
     res.status(400).send('invalid data');
+    return;
   }
 
   pool.query(

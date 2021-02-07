@@ -76,27 +76,31 @@ const App = () => {
       return null;
     }
 
-    return <DayChecklist workoutData={dayData} setActiveDayData={setActiveDayData} />;
+    return <DayChecklist getLatestData={getLatestData} workoutData={dayData} setActiveDayData={setActiveDayData} date={formatDate()} />;
+  }
+
+  const getLatestData = () => {
+    axios.get(`${process.env.REACT_APP_API_BASE}/get-entries`)
+    .then((res) => {
+      if (res.status === 200) {
+        setCurrentData(res.data);
+      } else {
+        alert('Failed to get data');
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   // get data on load
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_BASE}/get-entries`)
-      .then((res) => {
-        if (res.status === 200) {
-          setCurrentData(res.data);
-        } else {
-          alert('Failed to get data');
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getLatestData();
   }, []);
 
   return (
     <div className="App">
-      <span class="full-width-row">
+      <span className="full-width-row">
         <h2>Workouts</h2>
         <button type="button" onClick={ () => { setActiveDayData(blankEntry) } }>Add entry</button>
       </span>

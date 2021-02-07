@@ -3,7 +3,7 @@ import axios from 'axios';
 import './DayChecklist.scss';
 
 const DayChecklist = (props) => {
-  const { workoutData, setActiveDayData } = props;
+  const { workoutData, setActiveDayData, date, getLatestData } = props;
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const dateParts = workoutData.date.split("T")[0].split("-");
   // needs to be a global util
@@ -11,7 +11,7 @@ const DayChecklist = (props) => {
   const dateObj = new Date(workoutData.date);
   const dayNum = dateObj.getDay();
   const titleString = `${days[dayNum]} ${months[parseInt(dateParts[1]) - 1]}, ${dateParts[2]} ${dateParts[0]}`;
-  const stateArr = [false]; // first value is offset, this is so ugly I just don't care
+  const stateArr = [];
 
   // waste double loop
   const workout_data = JSON.parse(workoutData.workout_data);
@@ -19,7 +19,7 @@ const DayChecklist = (props) => {
     workout_data[workout].map(set => stateArr.push(set))
   ));
 
-  // make ref store of all inputs
+  // a simple array of values 0-8, separated into three by: squats, push ups, sit ups
   const [workouts, setWorkouts] = useState(stateArr);
 
   // SO copy again for key ugh
@@ -42,10 +42,30 @@ const DayChecklist = (props) => {
   }
 
   const saveData = () => {
-
+    const updateEntry = workoutData.id;
+    axios.post(`${process.env.REACT_APP_API_BASE}/${updateEntry ? 'update-entry' : 'insert-entry'}`, {
+        entryId: workoutData.id,
+        date,
+        workoutData: {
+          "squats": [workouts[0], workouts[1], workouts[2]], // idk why I decided to offset to start at 1
+          "push ups": [workouts[3], workouts[4], workouts[5]],
+          "sit ups": [workouts[6], workouts[7], workouts[8]]
+        }
+      })
+      .then((res) => {
+        if (res.status === 204 || res.status === 200) {
+          getLatestData();
+          setActiveDayData(null);
+        } else {
+          alert('Failed to save data');
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  let inc = 0; // this is dumb
+  let inc = -1; // this is dumb, also confused me with the offset
 
   return (
     <div className="App__day-checklist">

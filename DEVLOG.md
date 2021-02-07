@@ -3,8 +3,12 @@ Tasks
 - [x] create database tables
 - [x] create API
 - [x] make check mark interface
-- [ ] update data pull/send
+- [x] update data pull/send
 - [ ] host and test
+  - build react and upload with right base path/proxy to api
+  - Pi
+    - match tables
+    - create and start service to run node api
 
 ### 02/06/2021
 Going to make this work as it's just for me/need to move onto other projects.
@@ -14,6 +18,8 @@ I really have to update my calorie counter app too where I can actually use it/m
 This app is a mess, that's what you get from freestyle coding.
 
 Ehh I'm done, it's usable going to host it locally on one of my Pi's using `systemd` for the node part.
+
+Ugh... the process to deploy
 
 ### 02/03/2021
 I had some plans with week number grouping and what not... but I guess JS does not have an "expectedly works/clean" way to obtain that like PHP. Anyway I'm mostly just reducing complexity. Can pull this data out from a date time. Unfortunately messes up the front end/will have to adjust it. Working on linking the UI with the API right now.

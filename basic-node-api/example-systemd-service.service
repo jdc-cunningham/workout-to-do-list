@@ -1,0 +1,15 @@
+[Unit]
+Description=Workout Node MariaDB server
+
+[Service]
+ExecStart=/usr/bin/node /home/pi/workout/index.js
+
+Restart=always
+RestartSec=10
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=workout-node-mysql
+Environment=NODE_ENV=production PORT=5010
+
+[Install]
+WantedBy=multi-user.target

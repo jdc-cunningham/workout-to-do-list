@@ -3,6 +3,7 @@ import './assets/styles/App.scss';
 import DayRow from './components/day-row/DayRow';
 import DayChecklist from './components/day-checklist/DayChecklist';
 import axios from 'axios';
+import LoadingIcon from './assets/icons/ajax-loader.gif';
 
 const App = () => {
   const [activeDayData, setActiveDayData] = useState(null);
@@ -54,7 +55,7 @@ const App = () => {
 
   const renderWeeks = (workouts) => {
     if (!workouts || !workouts.length) {
-      return <p>No data</p>;
+      return <p>Fetching data... <img src={LoadingIcon} alt='loading icon'/></p>;
     }
 
     return workouts.map((workout, index) => (
